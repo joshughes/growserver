@@ -10,8 +10,8 @@ if (!deviceStore)
 
 function setDevice(device) {
   console.log("Setting device for "+ device.name)
-  bonescript.pinMode(device.pin_address,'out')
-  bonescript.digitalWrite(device.pin_address, device.state)
+  bonescript.pinMode(device.address,'out')
+  bonescript.digitalWrite(device.address, device.state)
 }
 
 function updateDevice(device,overwrite) {
