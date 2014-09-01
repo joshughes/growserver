@@ -1,5 +1,7 @@
 var restify = require('restify');
 var restifyValidation = require('node-restify-validation');
+var sys = require('sys')
+var exec = require('child_process').exec;
 
 var deviceStore = require('./devices.js').getDevicestore;
 
@@ -15,6 +17,12 @@ var validDevice = {
   address: { isRequired: true,  scope: 'path', description: 'The pin address to connect to the device' },
   state: { isRequired: true, isIn: [0,1], scope: 'params', description: 'The state of the device [0,1]' }
 };
+
+server.get('/temperature.json', function (req, res, next){
+  child = exec("./getTemp.py 11 30", function (error, stdout, stderr) {
+    resp.send(JSON.parse(stdout));
+  });
+});
 
 server.post({ url: '/devices.json',
   validation: validDevice },
