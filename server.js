@@ -20,7 +20,7 @@ var validDevice = {
 
 server.get('/temperature.json', function (req, res, next){
   child = exec("./getTemp.py 11 30", function (error, stdout, stderr) {
-    resp.send(JSON.parse(stdout));
+    res.send(JSON.parse(stdout));
   });
 });
 
@@ -50,18 +50,19 @@ server.get('/devices.json', function get(req, res, next) {
   });
 });
 
-server.put({ url: '/devices/:id.json',
+server.put({ url: '/devices/:id',
   validation: validDevice},
   function create(req, res, next) {
-    deviceStore.update({ id: req.params.id, name: req.body.name, state: req.body.state, device_address: req.body.device_address}, function (error, device) {
+    var device_id = req.params.id.split('.')
+    deviceStore.update({ id: parseInt(device_id[0]), name: req.body.name, state: req.body.state, device_address: req.body.device_address}, function (error, device) {
       if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
       res.send();
     });
 });
   
-server.del('/devices/:id.json', function (req, res, next) {
-  console.log("request is "+ req.params.id);
-  deviceStore.delete(req.params.id, function( error, device) {
+server.del('/devices/:id', function (req, res, next) {
+  var device_id = req.params.id.split('.')
+  deviceStore.delete(parseInt(device_id[0]), function( error, device) {
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
     res.send('204');
   });
