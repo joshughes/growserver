@@ -27,7 +27,7 @@ function deleteDevice(deviceId) {
   })
 }
 
-function readAnalogDevice(error, device, call_back) {
+var readAnalogDevice = function(error, device, call_back) {
   console.log("In readAnalogDevice")
   if(device.type == 'A') {
     console.log("Device is analog attempting to take reading")
