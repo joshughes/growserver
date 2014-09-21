@@ -5,6 +5,7 @@ var exec = require('child_process').exec;
 var fs    = require("fs")
 
 var deviceStore = require('./devices.js').getDevicestore;
+var readAnalogDevice = require('./devices.js').readAnalogDevice
 
 var server = restify.createServer({
   name: 'DeviceServer'
@@ -60,7 +61,7 @@ server.get( '/devices/:id/analog_reading.json' , function get(req, res, next) {
   console.log("Starting analog read")
   var device_id = req.params.id.split('.')
   deviceStore.findOne({ id: parseInt(device_id[0]) }, function (error, device) {
-    deviceStore.readAnalogDevice(error, device, function(error,device) { console.log("foobar") } );
+    readAnalogDevice(error, device, function(error,device) { console.log("foobar") } );
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
     res.send(device);
     console.log("Here I am ");
