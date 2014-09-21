@@ -10,8 +10,10 @@ if (!deviceStore)
 
 function setDevice(device) {
   console.log("Setting device for "+ device.name)
-  bonescript.pinMode(device.address,'out')
-  bonescript.digitalWrite(device.address, device.state)
+  if(device.type != 'A') {
+    bonescript.pinMode(device.address,'out')
+    bonescript.digitalWrite(device.address, device.state)
+  }
 }
 
 function updateDevice(device,overwrite) {
@@ -25,7 +27,13 @@ function deleteDevice(deviceId) {
   })
 }
 
-
+function readAnalogDevice(device) {
+  bonescript.analogRead(device.address, function (reading) {
+    device.state = reading.value
+    device.save
+  })
+}
+    
 deviceStore.on('afterCreate',setDevice)
 deviceStore.on('afterUpdate',updateDevice)
 deviceStore.on('delete',deleteDevice)
