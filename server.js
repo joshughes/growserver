@@ -55,6 +55,15 @@ server.get( '/devices/:id' , function get(req, res, next) {
   });
 });
 
+server.get( '/devices/:id/analog_reading.json' , function get(req, res, next) {
+  console.log("Device id %j", req.params.id)
+  var device_id = req.params.id.split('.')
+  deviceStore.findOne({ id: parseInt(device_id[0]) }, deviceStore.readAnalogDevice(device, function (error, device) {
+    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
+    res.send(device);
+  }));
+});
+
 server.get('/devices.json', function get(req, res, next) {
   deviceStore.find({}, function (error, devices) {
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));

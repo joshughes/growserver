@@ -1,7 +1,7 @@
 var b = require('bonescript');
 function printStatus(x) {
-      console.log('x.value = ' + x.value);
-          console.log('x.err = ' + x.err);
+  console.log('x.value = ' + x.value);
+  console.log('x.err = ' + x.err);
 }
 
 readSensor = function() {

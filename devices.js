@@ -27,11 +27,15 @@ function deleteDevice(deviceId) {
   })
 }
 
-function readAnalogDevice(device) {
-  bonescript.analogRead(device.address, function (reading) {
-    device.state = reading.value
-    device.save
-  })
+function readAnalogDevice(device, call_back) {
+  if(device.type == 'A') {
+    bonescript.analogRead(device.address, function (reading) {
+      deviceStore.update({reading: reading.value}, call_back)
+    })
+  } else {
+    error = "Device is Digital not Analog, can not take reading"
+    callback(error,device)
+  }
 }
     
 deviceStore.on('afterCreate',setDevice)
@@ -46,3 +50,4 @@ deviceStore.find({}, function (error, devices) {
 
 
 exports.getDevicestore = deviceStore
+exports.readAnalogDevice = readAnalogDevice
