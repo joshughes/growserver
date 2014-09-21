@@ -8,8 +8,9 @@ var devices = require('./devices.js');
 var deviceStore = devices.getDevicestore
 var readAnalogDevice = devices.readAnalogDevice;
 
-console.log("wtf is importing "+readAnalogDevice.to_s);
-console.log("wtf is importing "+deviceStore.to_s);
+console.log("wtf is importing "+readAnalogDevice);
+console.log("wtf is importing "+deviceStore);
+console.log("wtf is importing "+devices);
 
 var server = restify.createServer({
   name: 'DeviceServer'
