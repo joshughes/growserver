@@ -63,7 +63,7 @@ server.get( '/devices/:id/analog_reading.json' , function get(req, res, next) {
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
     res.send(device);
     console.log("Here I am ")
-  }));
+  });
 });
 
 server.get('/devices.json', function get(req, res, next) {
