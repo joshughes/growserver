@@ -4,10 +4,12 @@ var sys = require('sys');
 var exec = require('child_process').exec;
 var fs    = require("fs");
 
-var deviceStore = require('./devices.js').getDevicestore;
-var readAnalogDevice = require('./devices.js').readAnalogDevice;
+var devices = require('./devices.js');
+var deviceStore = devices.getDevicestore
+var readAnalogDevice = devices.readAnalogDevice;
 
 console.log("wtf is importing "+readAnalogDevice.to_s);
+console.log("wtf is importing "+deviceStore.to_s);
 
 var server = restify.createServer({
   name: 'DeviceServer'
