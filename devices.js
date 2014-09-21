@@ -35,7 +35,7 @@ var readAnalogDevice = function(error, device, call_back) {
   } else if(error) {
     call_back(error, device)
   } else {
-    error = "Device is Digital not Analog, can not take reading"
+    error.errors = { type: { message: "Wrong Device Type"} }
     call_back(error, device)
   }
 }
