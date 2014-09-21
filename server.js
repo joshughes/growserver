@@ -1,11 +1,13 @@
 var restify = require('restify');
 var restifyValidation = require('node-restify-validation');
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
-var fs    = require("fs")
+var fs    = require("fs");
 
 var deviceStore = require('./devices.js').getDevicestore;
-var readAnalogDevice = require('./devices.js').readAnalogDevice
+var readAnalogDevice = require('./devices.js').readAnalogDevice;
+
+console.log("wtf is importing "+readAnalogDevice.to_s);
 
 var server = restify.createServer({
   name: 'DeviceServer'
