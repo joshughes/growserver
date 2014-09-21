@@ -53,4 +53,4 @@ deviceStore.find({}, function (error, devices) {
 var foo = 5
 
 module.exports.getDevicestore = deviceStore
-module.exports.readAnalogDevice = foo
+module.exports.readAnalogDevice = readAnalogDevice
