@@ -28,7 +28,9 @@ function deleteDevice(deviceId) {
 }
 
 function readAnalogDevice(device, call_back) {
+  console.log("In readAnalogDevice")
   if(device.type == 'A') {
+    console.log("Device is analog attempting to take reading")
     bonescript.analogRead(device.address, function (reading) {
       deviceStore.update({reading: reading.value}, call_back)
     })
