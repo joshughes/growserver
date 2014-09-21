@@ -1,16 +1,13 @@
 var restify = require('restify');
 var restifyValidation = require('node-restify-validation');
-var sys = require('sys');
+
+var sys  = require('sys');
 var exec = require('child_process').exec;
-var fs    = require("fs");
+var fs   = require("fs");
 
-var devices = require('./devices.js');
-var deviceStore = devices.getDevicestore
+var devices          = require('./devices.js');
+var deviceStore      = devices.getDevicestore
 var readAnalogDevice = devices.readAnalogDevice;
-
-console.log("wtf is importing "+readAnalogDevice);
-console.log("wtf is importing "+deviceStore);
-console.log("wtf is importing "+devices);
 
 var server = restify.createServer({
   name: 'DeviceServer'
@@ -62,15 +59,11 @@ server.get( '/devices/:id' , function get(req, res, next) {
 });
 
 server.get( '/devices/:id/analog_reading.json' , function get(req, res, next) {
-  console.log("Device id %j", req.params.id)
-  console.log("Starting analog read")
   var device_id = req.params.id.split('.')
-  deviceStore.findOne({ id: parseInt(device_id[0]) }, function (error, device) {
-    readAnalogDevice(error, device, function(error,device) { console.log("foobar") } );
+  deviceStore.findOne({ id: parseInt(device_id[0]) }, readAnalogDevice( error, device, function (error, device) {
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)));
     res.send(device);
-    console.log("Here I am ");
-  });
+  }));
 });
 
 server.get('/devices.json', function get(req, res, next) {

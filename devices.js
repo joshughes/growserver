@@ -28,15 +28,15 @@ function deleteDevice(deviceId) {
 }
 
 var readAnalogDevice = function(error, device, call_back) {
-  console.log("In readAnalogDevice")
-  if(device.type == 'A') {
-    console.log("Device is analog attempting to take reading")
+  if(device.type == 'A' && !error) {
     bonescript.analogRead(device.address, function (reading) {
-      deviceStore.update({id: device.id, reading: reading.value}, call_back)
+      deviceStore.update({id: device.id, reading: reading.value}, call_back(error, device))
     })
+  } else if(error)
+    callback(error, device)
   } else {
     error = "Device is Digital not Analog, can not take reading"
-    callback(error,device)
+    callback(error, device)
   }
 }
     
