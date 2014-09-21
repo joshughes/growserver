@@ -32,7 +32,7 @@ var readAnalogDevice = function(error, device, call_back) {
   if(device.type == 'A') {
     console.log("Device is analog attempting to take reading")
     bonescript.analogRead(device.address, function (reading) {
-      deviceStore.update({reading: reading.value}, call_back)
+      deviceStore.update({id: device.id, reading: reading.value}, call_back)
     })
   } else {
     error = "Device is Digital not Analog, can not take reading"
