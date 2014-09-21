@@ -33,10 +33,10 @@ var readAnalogDevice = function(error, device, call_back) {
       deviceStore.update({id: device.id, reading: reading.value}, call_back(error, device))
     })
   } else if(error) {
-    callback(error, device)
+    call_back(error, device)
   } else {
     error = "Device is Digital not Analog, can not take reading"
-    callback(error, device)
+    call_back(error, device)
   }
 }
     
